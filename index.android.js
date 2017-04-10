@@ -29,7 +29,35 @@ export default class VideoPlayer extends Component {
                       });
     }
 
+    componentWillMount() {
+        console.log("componentWillMount,即将安装...");
+    };
+
+    componentDidMount() {
+        console.log("componentDidMount,安装完毕...");
+    };
+
+    shouldComponentUpdate()  {
+        console.log("shouldComponentUpdate,要不要更新...");
+        return true;
+    };
+
+    componentWillUpdate() {
+        console.log("componentWillUpdate,即将更新...");
+    };
+
+
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate,更新完毕...");
+    }
+
+
+
+
+
     render() {
+        console.log("render,要进行渲染了...");
         return (
             <View style={styles.container}>
                 <Text style={styles.welcome} onPress={this.timesPlus.bind(this)}>
