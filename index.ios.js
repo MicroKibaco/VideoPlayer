@@ -113,6 +113,7 @@ class Child extends VideoPlayer {
         super(props);
         // 初始状态
         this.state = {
+
             times: this.props.times
         };
     }
