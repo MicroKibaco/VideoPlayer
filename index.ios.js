@@ -1,35 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-// ES5 的写法
-
-/*var ReactNative = require('react-native');
-var React = require('react');
-var Component = React.Component;
-var StyleSheet = ReactNative.StyleSheet;
-var Text = ReactNative.Text;
-var AppRegistry = ReactNative.AppRegistry;
-var View = ReactNative.View;*/
-
-/*var React = require('react-native');
- var {
- AppRegistry,
- StyleSheet,
- Text,
- View
- } = React;*/
-
 
 // ES6 的写法
- import React, {Component} from 'react';
- import {
- AppRegistry,
- StyleSheet,
- Text,
- View
- } from 'react-native';
+import React, {Component} from 'react';
+import {
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
 
 class VideoPlayer extends Component {
 
@@ -44,22 +21,6 @@ class VideoPlayer extends Component {
         };
     }
 
-    /*      getDefaultProps() {
-
-     console.log('Father: ' + 'getDefaultProps,获取默认属性值');
-     };
-
-       getInitialState() {
-     console.log(
-     'Father: ' + 'getInitialState,得到初始化的通知');
-
-     return {
-     times: 2,
-     hit: false
-     }
-
-     };*/
-
     timesReset() {
 
         this.setState({});
@@ -67,7 +28,6 @@ class VideoPlayer extends Component {
     };
 
     WillHit() {
-
         this.setState({
 
                           hit: !this.state.hit,
@@ -134,8 +94,6 @@ class VideoPlayer extends Component {
         console.log("Father", "componentDidUpdate,更新完毕...");
     };
 
-
-
     timesPlus() {
         console.log('VideoPlayer: ' + 'timesPlus');
 
@@ -148,118 +106,98 @@ class VideoPlayer extends Component {
 
 }
 
-var Child = React.createClass({
+class Child extends VideoPlayer {
 
-                                  getDefaultProps:function(){
+    // 构造
+    constructor(props) {
+        super(props);
+        // 初始状态
+        this.state = {
+            times: this.props.times
+        };
+    }
 
-                                      console.log('Child: ' + 'getDefaultProps');
-                                  },
+    timesReset() {
 
-                                  getInitialState:function(){
-                                      console.log('Child: ' + 'getInitialState');
+        this.props.timesReset();
 
-                                      return {
-                                          times: this.props.times
-                                      }
+    };
 
-                                  },
-                                  timesReset:function(){
+    timesPlus() {
+        console.log('Child: ' + 'timesPlus');
 
-                                      this.props.timesReset();
+        let times = this.state.times;
+        times++;
+        this.setState({
+                          times: times
+                      });
+    };
 
-                                  },
-                                  timesPlus:function(){
-                                      console.log('Child: ' + 'timesPlus');
+    componentWillMount() {
+        console.log("Child", "componentWillMount,即将安装...");
+    };
 
-                                      let times = this.state.times;
-                                      times++;
-                                      this.setState({
-                                                        times: times
-                                                    });
-                                  },
+    componentDidMount() {
+        console.log("Child", "componentDidMount,安装完毕...");
+    };
 
-                                  componentWillMount:function() {
-                                      console.log("Child", "componentWillMount,即将安装...");
-                                  },
+    componentWillReceiveProps(props) {
+        console.log(this.props);
+        console.log("Child",
+                    "componentWillReceiveProps,决定当前属性的变化...");
+        this.setState({
 
-                                  componentDidMount:function(){
-                                      console.log("Child", "componentDidMount,安装完毕...");
-                                  },
-                                  componentWillReceiveProps:function(props)  {
-                                      console.log(this.props);
-                                      console.log("Child",
-                                                  "componentWillReceiveProps,决定当前属性的变化...");
-                                      this.setState({
+                          times: props.times
 
-                                                        times: props.times
+                      });
+        return true;
+    };
 
-                                                    });
-                                      return true;
-                                  },
-                                  shouldComponentUpdate:function()  {
-                                      console.log("Child", "shouldComponentUpdate,要不要更新...");
-                                      return true;
-                                  },
+    static shouldComponentUpdate() {
+        console.log("Child", "shouldComponentUpdate,要不要更新...");
+        return true;
+    };
 
-                                  componentWillUpdate:function() {
-                                      console.log("Child", "componentWillUpdate,即将更新...");
-                                  },
+    componentWillUpdate() {
+        console.log("Child", "componentWillUpdate,即将更新...");
+    };
 
-                                  componentDidUpdate:function() {
-                                      console.log("Child", "componentDidUpdate,更新完毕...");
-                                  },
+    componentDidUpdate() {
+        console.log("Child", "componentDidUpdate,更新完毕...");
+    };
 
-                                  render:function(){
+    render() {
 
-                                      return (
-                                          <View style={styles.container}>
+        return (
+            <View style={styles.container}>
 
-                                              <Text style={sonStyles.welcome}>
+                <Text style={styles.welcome}>
 
-                                                  儿子说:有本事揍我啊!!!
+                    儿子说:有本事揍我啊!!!
 
-                                              </Text>
+                </Text>
 
-                                              <Text style={sonStyles.instructions}
-                                                    onpress={this.timesPlus}>
+                <Text style={styles.instructions}
+                      onpress={this.timesPlus}>
 
-                                                  儿子说:你居然揍我{this.state.times}次
+                    儿子说:你居然揍我{this.state.times}次
 
-                                              </Text>
-                                              <Text style={sonStyles.instructions}
-                                                    onpress={this.timesReset}>
+                </Text>
+                <Text style={styles.instructions}
+                      onpress={this.timesReset}>
 
-                                                  儿子说:信不信我亲亲你
+                    儿子说:信不信我亲亲你
 
-                                              </Text>
+                </Text>
 
-                                          </View>
-                                      );
+            </View>
+        );
 
-                                  }
+    }
 
-                              },
-);
+}
 
 const styles = StyleSheet.create({
-                                     container: {
-                                         flex: 1,
-                                         justifyContent: 'center',
-                                         alignItems: 'center',
-                                         backgroundColor: '#F5FCFF',
-                                     },
-                                     welcome: {
-                                         fontSize: 20,
-                                         textAlign: 'center',
-                                         margin: 10,
-                                     },
-                                     instructions: {
-                                         textAlign: 'center',
-                                         color: '#333333',
-                                         marginBottom: 5,
-                                     },
-                                 });
-const sonStyles = StyleSheet.create({
                                      container: {
                                          flex: 1,
                                          justifyContent: 'center',
